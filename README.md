@@ -1,6 +1,6 @@
 # Blackjack Game
 ### Overview
-This is a simple text-based Blackjack game written in Python. The game uses a single deck of 52 cards.
+This is a simple text-based Blackjack game written in Python. In this game, players try to get a hand value as close to 21 as possible without exceeding it.
 
 ### How to Play
 The player and the dealer are each dealt two cards initially.
@@ -26,3 +26,17 @@ Download the code file.
 ### Running the Game
 To start the game, run the Python script:
 python blackjack.py
+
+### Game Flow
+Initialization: Create and shuffle the deck.
+
+Initial Deal: Deal two cards to the player and the dealer.
+
+Player's Turn: The player can hit or stand.
+
+Dealer's Turn: The dealer draws cards until their hand value is at least 17.
+
+Determine Outcome: Compare the player's and dealer's hands to determine the winner.
+
+
+
