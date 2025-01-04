@@ -114,57 +114,60 @@ def dealer_wins(player, dealer):
 def push(player, dealer):
     print("You and Dealer TIE!")  # Print a message indicating a push
 
-# Main game loop
-while True:
-    print("Time to test your luck at Blackjack!")
+def play_blackjack():
+    global playing
+    while True:
+        print("Time to test your luck at Blackjack!")
 
-    # Create and shuffle the deck
-    deck = Deck()
-    deck.shuffle()
+        # Create and shuffle the deck
+        deck = Deck()
+        deck.shuffle()
 
-    # Deal initial cards to player and dealer
-    player_hand = Hand()
-    player_hand.add_card(deck.deal())
-    player_hand.add_card(deck.deal())
+        # Deal initial cards to player and dealer
+        player_hand = Hand()
+        player_hand.add_card(deck.deal())
+        player_hand.add_card(deck.deal())
 
-    dealer_hand = Hand()
-    dealer_hand.add_card(deck.deal())
-    dealer_hand.add_card(deck.deal())
+        dealer_hand = Hand()
+        dealer_hand.add_card(deck.deal())
+        dealer_hand.add_card(deck.deal())
 
-    # Show initial hands
-    show_some(player_hand, dealer_hand)
+        # Show initial hands
+        show_some(player_hand, dealer_hand)
 
-    # Player's turn
-    while playing:
-        hit_or_stand(deck, player_hand)  # Prompt player to hit or stand
-        show_some(player_hand, dealer_hand)  # Show cards
+        # Player's turn
+        while playing:
+            hit_or_stand(deck, player_hand)  # Prompt player to hit or stand
+            show_some(player_hand, dealer_hand)  # Show cards
 
-        if player_hand.value > 21:
-            player_busts(player_hand, dealer_hand)  # Player busts
+            if player_hand.value > 21:
+                player_busts(player_hand, dealer_hand)  # Player busts
+                break
+
+        # Dealer's turn if player hasn't busted
+        if player_hand.value <= 21:
+            while dealer_hand.value < 17:
+                hit(deck, dealer_hand)  # Dealer hits until their hand value is at least 17
+
+            show_all(player_hand, dealer_hand)  # Show all cards
+
+            if dealer_hand.value > 21:
+                dealer_busts(player_hand, dealer_hand)  # Dealer busts
+            elif dealer_hand.value > player_hand.value:
+                dealer_wins(player_hand, dealer_hand)  # Dealer wins
+            elif dealer_hand.value < player_hand.value:
+                player_wins(player_hand, dealer_hand)  # Player wins
+            elif dealer_hand.value == player_hand.value:
+                push(player_hand, dealer_hand) 
+
+        # Ask if the player wants to play again
+        new_game = input("\nWant to play again? Enter 'y' or 'n': ")
+        if new_game[0].lower() == 'y':
+            playing = True
+            continue  # Start a new game
+        else:
+            print("\nIt was fun playing with you! See you soon!")  # End the game
             break
 
-    # Dealer's turn if player hasn't busted
-    if player_hand.value <= 21:
-        while dealer_hand.value < 17:
-            hit(deck, dealer_hand)  # Dealer hits until their hand value is at least 17
-
-        show_all(player_hand, dealer_hand)  # Show all cards
-
-        if dealer_hand.value > 21:
-            dealer_busts(player_hand, dealer_hand)  # Dealer busts
-        elif dealer_hand.value > player_hand.value:
-            dealer_wins(player_hand, dealer_hand)  # Dealer wins
-        elif dealer_hand.value < player_hand.value:
-            player_wins(player_hand, dealer_hand)  # Player wins
-        elif dealer_hand.value == player_hand.value: 
-            push(player_hand, dealer_hand) 
-
-    # Ask if the player wants to play again
-    new_game = input("\nWant to play again? Enter 'y' or 'n': ")
-    if new_game[0].lower() == 'y':
-        playing = True
-        continue  # Start a new game
-    else:
-        print("\nIt was fun playing with you! See you soon!")  # End the game
-        break
-
+if __name__ == "__main__":
+    play_blackjack()
