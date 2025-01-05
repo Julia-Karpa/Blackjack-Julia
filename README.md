@@ -31,3 +31,8 @@ Determine Outcome: Compare the player's and dealer's hands to determine the winn
 
 The goal is to have a hand value closer to 21 than the dealer without exceeding 21.
 
+### Running Tests
+Unit tests are provided to ensure the game logic is functioning correctly. To run the tests, execute the following command:
+python -m unittest test_blackjack.py
+
+
